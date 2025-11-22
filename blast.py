@@ -33,8 +33,8 @@ def blast(seq, db, genome):
             positions = db[wmer]
             #print(positions)
             for pos in positions:
-                sub_seq = seq[i:i + w]
-                sub_db_seq = genome[pos:pos + w]
+                # sub_seq = seq[i:i + w]
+                # sub_db_seq = genome[pos:pos + w]
                 #print(f'q: {sub_seq}', f'D: {sub_db_seq}')
                 l, r = findHSP(seq, genome, i, pos)
                 #print(l, r)
