@@ -13,7 +13,8 @@ def get_start_end_pos(blast_f):
 
 def intervals_overlap(int1, int2):
     """Check if two intervals overlap"""
-    return int2[0] <= int1[1] and int2[1] >= int1[1]
+    # Ri suffix overlaps with Rj prefix
+    return int2[0] <= int1[1] and int2[1] >= int1[0]
 
 def reads_overlap(intervals1, intervals2, read1_id, read2_id):
     """Check if any interval from read1 overlaps with any interval from read2"""
@@ -54,7 +55,6 @@ def overlaps_to_table(overlaps, output_file='overlap_table.tsv'):
         })
     
     df = pd.DataFrame(rows)
-    df = df.sort_values(['read1_id', 'read2_id', 'overlap_length'])
     df.to_csv(output_file, sep='\t', index=False)
     print(f"Table written to {output_file}")
     return df
