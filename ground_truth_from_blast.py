@@ -1,6 +1,11 @@
 from collections import defaultdict
 import pandas as pd
 
+"""
+find overlapping reads based on their read-to-genome positions from a BLAST output file. 
+where suffix of Ri matches with prefix from Rj.
+"""
+
 def get_start_end_pos(blast_f):
     results = defaultdict(list)
     with open(blast_f, 'r') as f:
@@ -14,7 +19,7 @@ def get_start_end_pos(blast_f):
 def intervals_overlap(int1, int2):
     """Check if two intervals overlap"""
     # Ri suffix overlaps with Rj prefix
-    return int2[0] <= int1[1] and int2[1] >= int1[0]
+    return int2[0] >= int1[0] and int2[0] <= int1[1] and int2[1] >= int1[0] and int2[1] >= int1[1]
 
 def reads_overlap(intervals1, intervals2, read1_id, read2_id):
     """Check if any interval from read1 overlaps with any interval from read2"""
@@ -22,7 +27,7 @@ def reads_overlap(intervals1, intervals2, read1_id, read2_id):
     for i1 in intervals1:
         for i2 in intervals2:
             if intervals_overlap(i1, i2) and (i1[1] - i2[0]) > 500:
-                overlaps.append((read1_id, read2_id, i1, i2, i1[1] - i2[0]))
+                overlaps.append((read1_id, read2_id, i1, i2))
     return overlaps
 
 def find_overlapping_reads(reads):
@@ -39,11 +44,11 @@ def find_overlapping_reads(reads):
     print(len(overlap_list))
     return overlap_list
 
-def overlaps_to_table(overlaps, output_file='overlap_table.tsv'):
+def overlaps_to_table(overlaps, output_file='overlapping_truth_table.tsv'):
     """Convert overlap tuples to a table with chrom_id as left column"""
     rows = []
     for overlap in overlaps:
-        read1, read2, idx1, idx2, overlap_len = overlap
+        read1, read2, idx1, idx2 = overlap
         rows.append({
             'read1_id': read1,
             'read2_id': read2,
@@ -51,7 +56,6 @@ def overlaps_to_table(overlaps, output_file='overlap_table.tsv'):
             'read1_end': idx1[1],
             'read2_start': idx2[0],
             'read2_end': idx2[1],
-            'overlap_length': overlap_len
         })
     
     df = pd.DataFrame(rows)
@@ -60,6 +64,7 @@ def overlaps_to_table(overlaps, output_file='overlap_table.tsv'):
     return df
 
 if __name__ == "__main__":
+    # this file has reads aligning to the area in the genome with custom output format
     blast_file = 'alignments_custom_tab.txt' 
     results = get_start_end_pos(blast_file)
     overlaps = find_overlapping_reads(results)

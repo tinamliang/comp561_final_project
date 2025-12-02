@@ -1,5 +1,13 @@
 ### some script code was produced using Claude: with prompt "can we parse just the gaps metrics and identities % from txt file"
+"""
+makeblastdb -in GCA_000227135.2_ASM22713v2_genomic.fna -dbtype nucl -out leishmania_db
+blastn -query readsMappingToChr1.fa -db leishmania_db -strand plus -out alignments.txt -outfmt 0
+   alignments.txt: full read-to-genome BLAST alignment output
 
+blastn -query readsMappingToChr1.fa -db leishmania_db -strand plus -out alignments_custom_tab.txt -outfmt "6 qseqid sstart send"
+  alignments_custom_tab.txt: custom tabular output with read start/end positions on genome
+
+"""
 import re
 
 def parse_blast_metrics(blast_text):
@@ -37,13 +45,13 @@ if __name__ == "__main__":
         blast_output = f.read()
 
     metrics = parse_blast_metrics(blast_output)
-   # print(len(metrics))
+    print(len(metrics))
     
-    with open('metrics.txt', 'w') as f:
-        for m in metrics:
-            print(f"Query: {m['query']}", file=f)
-            print(f"  Matches (%): {m['identity_pct']}", file=f)
-            print(f"  Gaps (%): {m['gaps_pct']}", file=f)
-            subst_pct = f"{100 - int(m['identity_pct'][:-1]) - int(m['gaps_pct'][:-1])}%"
-            print(f"  Substitutions (%): {subst_pct}", file=f)
-            print()
+    # with open('metrics.txt', 'w') as f:
+    #     for m in metrics:
+    #         print(f"Query: {m['query']}", file=f)
+    #         print(f"  Matches (%): {m['identity_pct']}", file=f)
+    #         print(f"  Gaps (%): {m['gaps_pct']}", file=f)
+    #         subst_pct = f"{100 - int(m['identity_pct'][:-1]) - int(m['gaps_pct'][:-1])}%"
+    #         print(f"  Substitutions (%): {subst_pct}", file=f)
+    #         print()
