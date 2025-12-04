@@ -2,7 +2,7 @@
 2. Output csv file where each read Ri is identified with the Rj it overlaps with in the genome (overlaps_ground_truth.csv).
 3. For each read Ri, run BLAST, where the database is the rest of the reads. 
 4. Identify all high-scoring alignments. (results.csv)
-5. Output a final csv identifying read Ri and the percentage of overlapping pairs the alignment method (Step 4) was able to correctly identify from the ones obtained in Step 2 (eval_results_naive_sol.csv).
+5. Output a final csv identifying read Ri and the percentage of overlapping pairs the alignment method (Step 4) was able to correctly identify from the ones obtained in Step 2 (eval_naive_sol.csv).
 
 
 ### To try later ...
