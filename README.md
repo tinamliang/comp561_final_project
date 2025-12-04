@@ -8,3 +8,4 @@
 ### To try later ...
 6. Run a variant of S-W (ie. reduce weight of indel errors to substitution errors) algorithm to align the sequences and get a score. Get corrected overlap lengths.
 7. Compare (Ri, Rj) results to the 'ground truth' obtained from BLAST.
+modifiedBLAST_pairing.py pairs highly aligned reads
