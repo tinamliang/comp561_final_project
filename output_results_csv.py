@@ -1,4 +1,5 @@
 import os
+import time
 from collections import defaultdict
 import pandas as pd
 
@@ -132,4 +133,8 @@ def output_alignment_custom_files(fasta_file):
 
 if __name__ == "__main__":
     fasta_file = 'readsMappingToChr1.fa'
+    start_time = time.time()
     pairs = output_alignment_custom_files(fasta_file)
+    end_time = time.time()
+    total_time = end_time - start_time
+    print(f"Total time taken: {total_time:.2f} seconds or {total_time/60:.2f} minutes")
