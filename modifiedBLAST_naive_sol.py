@@ -72,7 +72,7 @@ def process_read(header, sequence, ct):
     
     blast_command = (
         f"blastn -db other_reads_db -query read{ct}.fa "
-        f"-outfmt '6 qacc sacc sstart send' -out {output_file} -strand plus"
+        f"-outfmt '6 qacc sacc sstart send' -out {output_file}"
     )
 
     print(f"-> Running BLAST for read: {ct}")
@@ -116,8 +116,8 @@ def accuracy_table():
     if all_accuracy_results:
         #print(all_accuracy_results)
         df_accuracy = pd.DataFrame(all_accuracy_results)
-        df_accuracy.to_csv('results.csv', index=False)
-        print(f"Successfully saved all accuracy results ({len(df_accuracy)} rows) to results.csv")
+        df_accuracy.to_csv('results_with_both_strands.csv', index=False)
+        print(f"Successfully saved all accuracy results ({len(df_accuracy)} rows) to results_with_both_strands.csv")
 
 ### process each read from fasta file
 def output_alignment_custom_files(fasta_file):

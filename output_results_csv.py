@@ -65,7 +65,7 @@ def process_read(header, sequence, ct):
     
     blast_command = (
         f"blastn -db other_reads_db -query read{ct}.fa "
-        f"-outfmt '6 qacc sacc sstart send' -out {output_file} -strand plus"
+        f"-outfmt '6 qacc sacc sstart send' -out {output_file}"
     )
 
     print(f"-> Running BLAST for read: {ct}")
@@ -103,7 +103,7 @@ def process_read(header, sequence, ct):
     pairs = overlapping_pairs_for_read(input_file, 'overlaps_ground_truth.csv')
     all_overlapping_pairs.extend(pairs)
     df_pairs = pd.DataFrame(all_overlapping_pairs)
-    df_pairs.to_csv('overlapping_pairs_output.csv', index=False)
+    df_pairs.to_csv('overlapping_pairs__both_strands_output.csv', index=False)
     #print(f"Successfully saved all accuracy results ({len(df_pairs)} rows) to overlapping_pairs_output.csv")
 
 ### process each read from fasta file
