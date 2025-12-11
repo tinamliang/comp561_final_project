@@ -2,7 +2,7 @@ import subprocess
 import tempfile
 import time
 
-subject = r"C:/Users/dikar/Desktop/study/study university/FALL 2025/COMP 561/Final Project/reads.fasta"
+subject = r"reads.fasta"
 
 # thresholds for calling an overlap from BLAST
 MIN_LEN = 500      # min alignment length (tune this)
@@ -108,7 +108,7 @@ print(f"Execution time: {end_time - start_time:.2f} seconds")
 # -------------------------
 # 3. Write pairs to file (real read IDs)
 # -------------------------
-out_path = r"C:/Users/dikar/Desktop/study/study university/FALL 2025/COMP 561/Final Project/pairs_blast.txt"
+out_path = r"pairs_blast.csv"
 with open(out_path, "w") as file_object:
     for a, b in sorted(pairs):
         file_object.write(f"{a},{b}\n")
